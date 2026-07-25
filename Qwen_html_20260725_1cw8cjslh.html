@@ -1,0 +1,1317 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Sonrisa Plena · Clínica Dental Premium</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  :root {
+    --bg-0:#f0f4f8; --bg-1:#e2e8f0; --bg-2:#cbd5e1;
+    --glass: rgba(255,255,255,0.5);
+    --glass-strong: rgba(255,255,255,0.7);
+    --border: rgba(0,0,0,0.08);
+    --border-strong: rgba(0,0,0,0.15);
+    --text:#0f172a; --text-dim:#475569; --text-muted:#94a3b8;
+    --cyan:#0891b2; --teal:#0d9488; --purple:#7c3aed; --pink:#db2777;
+    --grad: linear-gradient(135deg, #0891b2 0%, #0d9488 50%, #7c3aed 100%);
+    --grad-soft: linear-gradient(135deg, rgba(8,145,178,.1), rgba(124,58,237,.1));
+    --shadow: 0 20px 60px rgba(0,0,0,.08);
+    --glow: 0 0 40px rgba(8,145,178,.15);
+    --focus-ring: 0 0 0 3px rgba(8,145,178,.3);
+  }
+  html { scroll-behavior:smooth; }
+  body {
+    font-family:'Inter','Segoe UI',system-ui,sans-serif;
+    background:var(--bg-0); color:var(--text);
+    line-height:1.6; overflow-x:hidden; min-height:100vh;
+    position:relative;
+  }
+  body::before, body::after {
+    content:''; position:fixed; border-radius:50%;
+    filter:blur(120px); opacity:.18; z-index:0; pointer-events:none;
+    animation: float 20s ease-in-out infinite;
+  }
+  body::before { width:500px; height:500px; background:var(--cyan); top:-150px; left:-150px; }
+  body::after { width:600px; height:600px; background:var(--purple); bottom:-200px; right:-200px; animation-delay:-10s; }
+  @keyframes float {
+    0%,100% { transform:translate(0,0) scale(1); }
+    33% { transform:translate(80px,-60px) scale(1.1); }
+    66% { transform:translate(-60px,80px) scale(.95); }
+  }
+
+  :focus-visible { outline: 2px solid var(--cyan); outline-offset: 3px; border-radius: 6px; }
+  button:focus-visible, input:focus-visible { outline: none; box-shadow: var(--focus-ring); }
+
+  nav {
+    position:sticky; top:0; z-index:100;
+    background:rgba(240,244,248,.8); backdrop-filter:blur(20px);
+    -webkit-backdrop-filter:blur(20px);
+    border-bottom:1px solid var(--border);
+    padding:1rem 2rem; display:flex;
+    justify-content:space-between; align-items:center;
+  }
+  .logo { display:flex; align-items:center; gap:.7rem; font-size:1.3rem; font-weight:700; letter-spacing:-.5px; }
+  .logo-icon {
+    width:36px; height:36px; border-radius:10px;
+    background:var(--grad); display:flex; align-items:center; justify-content:center;
+    box-shadow:var(--glow);
+  }
+  .logo-icon svg { width:20px; height:20px; color:#fff; }
+  .logo-text { background:var(--grad); -webkit-background-clip:text; background-clip:text; color:transparent; }
+  nav ul { display:flex; gap:2rem; list-style:none; }
+  nav a { color:var(--text-dim); text-decoration:none; font-weight:500; font-size:.95rem; transition:.3s; position:relative; }
+  nav a:hover { color:var(--text); }
+  nav a::after { content:''; position:absolute; bottom:-6px; left:0; width:0; height:2px; background:var(--grad); transition:.3s; }
+  nav a:hover::after { width:100%; }
+
+  .hero { position:relative; padding:7rem 2rem 6rem; text-align:center; z-index:1; }
+  .hero-badge {
+    display:inline-flex; align-items:center; gap:.5rem;
+    padding:.5rem 1rem; border-radius:50px;
+    background:var(--glass); border:1px solid var(--border);
+    backdrop-filter:blur(10px); font-size:.85rem; color:var(--text-dim);
+    margin-bottom:1.5rem;
+  }
+  .hero-badge .dot { width:8px; height:8px; border-radius:50%; background:#16a34a; box-shadow:0 0 10px #16a34a; animation:pulse-dot 2s infinite; }
+  @keyframes pulse-dot { 0%,100% { opacity:1; } 50% { opacity:.4; } }
+  .hero h1 {
+    font-size:clamp(2.2rem, 5vw, 4rem); font-weight:800;
+    letter-spacing:-1.5px; line-height:1.1; margin-bottom:1.2rem;
+    max-width:900px; margin-left:auto; margin-right:auto;
+  }
+  .hero h1 .grad { background:var(--grad); -webkit-background-clip:text; background-clip:text; color:transparent; }
+  .hero p { font-size:1.15rem; color:var(--text-dim); max-width:650px; margin:0 auto 2.5rem; }
+  .hero-buttons { display:flex; gap:1rem; justify-content:center; flex-wrap:wrap; }
+  .btn {
+    padding:.95rem 1.8rem; border-radius:12px; font-weight:600;
+    font-size:.95rem; cursor:pointer; transition:.3s;
+    border:none; display:inline-flex; align-items:center; gap:.5rem;
+    text-decoration:none;
+  }
+  .btn-primary { background:var(--grad); color:#fff; box-shadow:0 10px 30px rgba(8,145,178,.25); }
+  .btn-primary:hover { transform:translateY(-2px); box-shadow:0 15px 40px rgba(8,145,178,.4); }
+  .btn-ghost { background:var(--glass); color:var(--text); border:1px solid var(--border); backdrop-filter:blur(10px); }
+  .btn-ghost:hover { background:var(--glass-strong); border-color:var(--border-strong); }
+
+  .stats {
+    position:relative; z-index:1;
+    display:grid; grid-template-columns:repeat(auto-fit, minmax(180px, 1fr));
+    gap:1.5rem; max-width:1100px; margin:0 auto; padding:0 2rem 4rem;
+  }
+  .stat {
+    background:var(--glass); border:1px solid var(--border);
+    backdrop-filter:blur(20px); -webkit-backdrop-filter:blur(20px);
+    border-radius:20px; padding:1.8rem 1.2rem; text-align:center; transition:.3s;
+  }
+  .stat:hover { transform:translateY(-4px); border-color:var(--border-strong); }
+  .stat-num { font-size:2.2rem; font-weight:800; background:var(--grad); -webkit-background-clip:text; background-clip:text; color:transparent; }
+  .stat-label { color:var(--text-dim); font-size:.9rem; margin-top:.3rem; }
+
+  section.block { position:relative; z-index:1; padding:5rem 2rem; max-width:1200px; margin:0 auto; }
+  .section-head { text-align:center; margin-bottom:3.5rem; }
+  .section-tag {
+    display:inline-block; padding:.35rem .9rem; border-radius:50px;
+    background:var(--grad-soft); border:1px solid var(--border);
+    font-size:.8rem; color:var(--cyan); font-weight:600;
+    letter-spacing:.5px; text-transform:uppercase; margin-bottom:1rem;
+  }
+  .section-head h2 { font-size:clamp(1.8rem, 3.5vw, 2.6rem); font-weight:800; letter-spacing:-1px; margin-bottom:.8rem; }
+  .section-head p { color:var(--text-dim); max-width:600px; margin:0 auto; }
+  .grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(260px, 1fr)); gap:1.5rem; }
+
+  .card {
+    background:var(--glass); border:1px solid var(--border);
+    backdrop-filter:blur(20px); -webkit-backdrop-filter:blur(20px);
+    border-radius:20px; padding:2rem; transition:.4s;
+    position:relative; overflow:hidden;
+  }
+  .card::before { content:''; position:absolute; inset:0; background:var(--grad); opacity:0; transition:.4s; z-index:0; }
+  .card:hover { transform:translateY(-6px); border-color:var(--border-strong); box-shadow:var(--shadow), var(--glow); }
+  .card:hover::before { opacity:.05; }
+  .card > * { position:relative; z-index:1; }
+  .card-icon {
+    width:54px; height:54px; border-radius:14px;
+    background:var(--grad-soft); border:1px solid var(--border);
+    display:flex; align-items:center; justify-content:center;
+    font-size:1.5rem; margin-bottom:1.2rem;
+  }
+  .card h3 { font-size:1.15rem; font-weight:700; margin-bottom:.5rem; }
+  .card p { color:var(--text-dim); font-size:.92rem; }
+  .card-price { margin-top:1rem; padding-top:1rem; border-top:1px solid var(--border); font-size:.85rem; color:var(--cyan); font-weight:600; }
+
+  .doctor {
+    background:var(--glass); border:1px solid var(--border);
+    backdrop-filter:blur(20px); -webkit-backdrop-filter:blur(20px);
+    border-radius:20px; overflow:hidden; transition:.4s;
+  }
+  .doctor:hover { transform:translateY(-6px); border-color:var(--border-strong); box-shadow:var(--shadow); }
+  .doctor-img {
+    height:220px; background:var(--grad); position:relative;
+    display:flex; align-items:center; justify-content:center;
+    font-size:5rem; overflow:hidden;
+  }
+  .doctor-img::after { content:''; position:absolute; inset:0; background:linear-gradient(to top, rgba(240,244,248,.4), transparent); }
+  .doctor-info { padding:1.5rem; }
+  .doctor-info h4 { font-size:1.1rem; font-weight:700; margin-bottom:.3rem; }
+  .doctor-info span { color:var(--text-dim); font-size:.88rem; }
+  .doctor-tags { display:flex; gap:.4rem; margin-top:.8rem; flex-wrap:wrap; }
+  .doctor-tag {
+    font-size:.72rem; padding:.25rem .6rem; border-radius:50px;
+    background:var(--glass-strong); border:1px solid var(--border); color:var(--text-dim);
+  }
+
+  .cta { position:relative; z-index:1; max-width:1100px; margin:3rem auto; padding:0 2rem; }
+  .cta-box {
+    background:var(--glass); border:1px solid var(--border);
+    backdrop-filter:blur(20px); -webkit-backdrop-filter:blur(20px);
+    border-radius:24px; padding:3rem 2rem; text-align:center;
+    position:relative; overflow:hidden;
+  }
+  .cta-box::before { content:''; position:absolute; inset:-2px; background:var(--grad); opacity:.12; z-index:0; filter:blur(30px); }
+  .cta-box > * { position:relative; z-index:1; }
+  .cta-box h3 { font-size:1.8rem; font-weight:800; margin-bottom:.8rem; }
+  .cta-box p { color:var(--text-dim); margin-bottom:1.5rem; }
+
+  footer {
+    position:relative; z-index:1;
+    border-top:1px solid var(--border);
+    padding:3rem 2rem 2rem; margin-top:4rem;
+    background:rgba(240,244,248,.7); backdrop-filter:blur(20px);
+  }
+  .footer-grid {
+    max-width:1200px; margin:0 auto;
+    display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr));
+    gap:2rem; margin-bottom:2rem;
+  }
+  .footer-col h5 { font-size:.9rem; font-weight:700; margin-bottom:1rem; text-transform:uppercase; letter-spacing:.5px; }
+  .footer-col p, .footer-col a { color:var(--text-dim); font-size:.9rem; text-decoration:none; display:block; margin-bottom:.5rem; transition:.2s; }
+  .footer-col a:hover { color:var(--cyan); }
+  .footer-bottom {
+    max-width:1200px; margin:0 auto; padding-top:1.5rem;
+    border-top:1px solid var(--border); text-align:center;
+    color:var(--text-muted); font-size:.85rem;
+  }
+
+  .chat-toggle {
+    position:fixed; bottom:25px; right:25px; width:62px; height:62px;
+    border-radius:50%; background:var(--grad); color:#fff;
+    border:none; cursor:pointer; z-index:999;
+    display:flex; align-items:center; justify-content:center;
+    box-shadow:0 10px 30px rgba(8,145,178,.3), var(--glow);
+    transition:.3s;
+  }
+  .chat-toggle:hover { transform:scale(1.08) rotate(8deg); }
+  .chat-toggle::after {
+    content:''; position:absolute; inset:-4px; border-radius:50%;
+    border:2px solid var(--cyan); opacity:.5;
+    animation:ring 2s infinite;
+  }
+  @keyframes ring { 0% { transform:scale(1); opacity:.5; } 100% { transform:scale(1.5); opacity:0; } }
+
+  .chat-badge {
+    position:absolute; top:-4px; right:-4px;
+    min-width:22px; height:22px; padding:0 6px;
+    background:#dc2626; color:#fff; font-size:.72rem; font-weight:700;
+    border-radius:11px; display:none; align-items:center; justify-content:center;
+    border:2px solid var(--bg-0);
+    animation:badgePop .4s cubic-bezier(.2,.9,.3,1.4);
+    z-index:2;
+  }
+  .chat-badge.visible { display:flex; }
+  @keyframes badgePop { from { transform:scale(0); } to { transform:scale(1); } }
+
+  .chat-window {
+    position:fixed; bottom:100px; right:25px; width:390px;
+    max-width:calc(100vw - 30px); height:580px; max-height:calc(100vh - 130px);
+    background:rgba(255,255,255,.92); backdrop-filter:blur(30px);
+    -webkit-backdrop-filter:blur(30px);
+    border:1px solid var(--border-strong); border-radius:24px;
+    box-shadow:0 30px 80px rgba(0,0,0,.12), var(--glow);
+    display:none; flex-direction:column; overflow:hidden; z-index:999;
+  }
+  .chat-window.active { display:flex; animation:chatIn .35s cubic-bezier(.2,.9,.3,1.2); }
+  @keyframes chatIn {
+    from { opacity:0; transform:translateY(20px) scale(.95); }
+    to { opacity:1; transform:translateY(0) scale(1); }
+  }
+
+  .chat-header {
+    background:linear-gradient(135deg, rgba(8,145,178,.15), rgba(124,58,237,.15));
+    border-bottom:1px solid var(--border);
+    padding:1rem 1.2rem; display:flex; align-items:center; gap:.8rem;
+  }
+  .chat-avatar {
+    width:42px; height:42px; border-radius:12px;
+    background:var(--grad); display:flex; align-items:center;
+    justify-content:center; font-size:1.3rem;
+    box-shadow:0 4px 15px rgba(8,145,178,.3);
+    flex-shrink:0;
+  }
+  .chat-header-info { flex:1; min-width:0; }
+  .chat-header h4 { font-size:1rem; font-weight:700; color:var(--text); }
+  .chat-header span { font-size:.75rem; color:var(--text-dim); display:flex; align-items:center; gap:.4rem; }
+  .chat-header span::before {
+    content:''; width:7px; height:7px; background:#16a34a;
+    border-radius:50%; box-shadow:0 0 8px #16a34a;
+  }
+  .chat-header-actions { display:flex; gap:.4rem; }
+  .icon-btn {
+    background:var(--glass); border:1px solid var(--border);
+    color:var(--text-dim); width:32px; height:32px; border-radius:8px;
+    cursor:pointer; display:flex; align-items:center; justify-content:center;
+    transition:.2s; flex-shrink:0;
+  }
+  .icon-btn:hover { background:var(--glass-strong); color:var(--text); }
+  .icon-btn.muted { color:#dc2626; }
+  .icon-btn svg { width:15px; height:15px; }
+
+  .chat-body {
+    flex:1; overflow-y:auto; padding:1.2rem;
+    display:flex; flex-direction:column; gap:.8rem;
+    background:rgba(248,250,252,.5);
+  }
+  .chat-body::-webkit-scrollbar { width:6px; }
+  .chat-body::-webkit-scrollbar-track { background:transparent; }
+  .chat-body::-webkit-scrollbar-thumb { background:var(--border); border-radius:3px; }
+
+  .msg {
+    max-width:82%; padding:.75rem 1rem; border-radius:16px;
+    font-size:.9rem; line-height:1.5; word-wrap:break-word;
+    animation:msgIn .3s; position:relative;
+  }
+  @keyframes msgIn { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }
+  .msg.bot {
+    background:var(--glass-strong); color:var(--text);
+    align-self:flex-start; border:1px solid var(--border);
+    border-bottom-left-radius:4px;
+  }
+  .msg.user {
+    background:var(--grad); color:#fff; align-self:flex-end;
+    border-bottom-right-radius:4px;
+    box-shadow:0 4px 15px rgba(8,145,178,.25);
+  }
+  .msg-time { display:block; font-size:.65rem; opacity:.6; margin-top:.3rem; text-align:right; }
+
+  .inline-buttons {
+    display:flex; flex-wrap:wrap; gap:.4rem;
+    margin-top:.6rem; padding-top:.6rem;
+    border-top:1px dashed var(--border);
+    animation:msgIn .3s;
+  }
+  .inline-btn {
+    background:var(--glass); border:1px solid var(--border);
+    color:var(--text); padding:.5rem .9rem; border-radius:10px;
+    font-size:.82rem; cursor:pointer; transition:.2s;
+    display:inline-flex; align-items:center; gap:.4rem;
+    font-weight:500;
+  }
+  .inline-btn:hover:not(:disabled) {
+    background:var(--grad-soft); border-color:var(--cyan);
+    color:var(--cyan); transform:translateY(-1px);
+  }
+  .inline-btn:focus-visible { outline:none; box-shadow:var(--focus-ring); }
+  .inline-btn:disabled { opacity:.4; cursor:not-allowed; background:var(--glass); }
+  .inline-btn.primary { background:var(--grad); border-color:transparent; color:#fff; font-weight:600; }
+  .inline-btn.primary:hover:not(:disabled) {
+    transform:translateY(-1px);
+    box-shadow:0 4px 15px rgba(8,145,178,.35);
+    color:#fff;
+  }
+  .inline-btn.danger { border-color:rgba(220,38,38,.3); color:#b91c1c; }
+  .inline-btn.danger:hover:not(:disabled) {
+    background:rgba(220,38,38,.08); border-color:#dc2626; color:#b91c1c;
+  }
+
+  .service-cards {
+    display:grid; grid-template-columns:1fr 1fr; gap:.5rem;
+    margin-top:.6rem; width:100%;
+    animation:msgIn .3s;
+  }
+  .service-card {
+    background:var(--glass); border:1px solid var(--border);
+    border-radius:12px; padding:.8rem .6rem;
+    cursor:pointer; transition:.25s;
+    text-align:center; display:flex; flex-direction:column;
+    align-items:center; gap:.3rem;
+  }
+  .service-card:hover:not(.disabled) {
+    background:var(--grad-soft); border-color:var(--cyan);
+    transform:translateY(-2px);
+    box-shadow:0 6px 20px rgba(8,145,178,.15);
+  }
+  .service-card:focus-visible { outline:none; box-shadow:var(--focus-ring); }
+  .service-card.disabled { opacity:.4; cursor:not-allowed; }
+  .service-card .sc-icon {
+    width:38px; height:38px; border-radius:10px;
+    background:var(--grad-soft); display:flex;
+    align-items:center; justify-content:center;
+    font-size:1.3rem;
+  }
+  .service-card .sc-name { font-size:.78rem; font-weight:600; color:var(--text); line-height:1.2; }
+  .service-card .sc-price { font-size:.7rem; color:var(--cyan); font-weight:500; }
+
+  .suggestions { display:flex; flex-wrap:wrap; gap:.4rem; align-self:flex-start; }
+  .suggestion-btn {
+    background:var(--glass); border:1px solid var(--border);
+    color:var(--cyan); padding:.45rem .9rem; border-radius:50px;
+    font-size:.8rem; cursor:pointer; transition:.2s;
+  }
+  .suggestion-btn:hover, .suggestion-btn:focus-visible {
+    background:var(--grad-soft); border-color:var(--cyan); transform:translateY(-1px);
+    outline:none; box-shadow:var(--focus-ring);
+  }
+
+  .typing { display:flex; gap:5px; padding:.75rem 1rem;
+    background:var(--glass-strong); border:1px solid var(--border);
+    border-radius:16px; align-self:flex-start; width:fit-content;
+    border-bottom-left-radius:4px;
+  }
+  .typing span {
+    width:7px; height:7px; background:var(--cyan); border-radius:50%;
+    animation:typing 1.4s infinite;
+  }
+  .typing span:nth-child(2) { animation-delay:.2s; }
+  .typing span:nth-child(3) { animation-delay:.4s; }
+  @keyframes typing {
+    0%,60%,100% { transform:translateY(0); opacity:.4; }
+    30% { transform:translateY(-6px); opacity:1; }
+  }
+
+  .chat-input {
+    display:flex; padding:.9rem; gap:.5rem;
+    border-top:1px solid var(--border);
+    background:rgba(248,250,252,.6);
+  }
+  .chat-input input {
+    flex:1; padding:.75rem 1rem; background:var(--glass);
+    border:1px solid var(--border); border-radius:12px;
+    color:var(--text); outline:none; font-size:.9rem;
+    transition:.25s;
+    max-width:100%;
+  }
+  .chat-input input::placeholder { color:var(--text-muted); }
+  .chat-input input:focus {
+    border-color:var(--cyan);
+    box-shadow:0 0 0 3px rgba(8,145,178,.15);
+    background:rgba(255,255,255,.9);
+  }
+  .chat-input button {
+    background:var(--grad); color:#fff; border:none;
+    width:42px; height:42px; border-radius:12px; cursor:pointer;
+    display:flex; align-items:center; justify-content:center;
+    transition:.2s; flex-shrink:0;
+  }
+  .chat-input button:hover { transform:scale(1.05); }
+
+  .sr-only {
+    position:absolute; width:1px; height:1px; padding:0; margin:-1px;
+    overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0;
+  }
+
+  @media (max-width:768px) {
+    nav ul { display:none; }
+    .hero { padding:4rem 1.5rem 3rem; }
+    section.block { padding:3rem 1.5rem; }
+    .chat-window { right:15px; bottom:95px; }
+    .chat-toggle { right:15px; bottom:15px; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo">
+    <div class="logo-icon">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C9 2 7 4 7 7c0 2 1 3 1 5s-1 3-1 5c0 3 2 5 5 5s5-2 5-5c0-2-1-3-1-5s1-3 1-5c0-3-2-5-5-5z"/></svg>
+    </div>
+    <span class="logo-text">Sonrisa Plena</span>
+  </div>
+  <ul>
+    <li><a href="#servicios">Servicios</a></li>
+    <li><a href="#doctores">Equipo</a></li>
+    <li><a href="#contacto">Contacto</a></li>
+  </ul>
+</nav>
+
+<section class="hero">
+  <div class="hero-badge">
+    <span class="dot"></span>
+    Asistente virtual disponible 24/7
+  </div>
+  <h1>Tu sonrisa merece <span class="grad">tecnología de vanguardia</span></h1>
+  <p>Más de 15 años combinando experiencia humana e innovación para cuidar la salud bucal de tu familia con los más altos estándares.</p>
+  <div class="hero-buttons">
+    <button class="btn btn-primary" onclick="toggleChat()">💬 Hablar con SonriBot</button>
+    <a href="#servicios" class="btn btn-ghost">Ver servicios →</a>
+  </div>
+</section>
+
+<div class="stats">
+  <div class="stat"><div class="stat-num">15+</div><div class="stat-label">Años de experiencia</div></div>
+  <div class="stat"><div class="stat-num">8K+</div><div class="stat-label">Pacientes felices</div></div>
+  <div class="stat"><div class="stat-num">98%</div><div class="stat-label">Satisfacción</div></div>
+  <div class="stat"><div class="stat-num">24/7</div><div class="stat-label">Urgencias</div></div>
+</div>
+
+<section id="servicios" class="block">
+  <div class="section-head">
+    <span class="section-tag">Servicios</span>
+    <h2>Todo lo que tu sonrisa necesita</h2>
+    <p>Tratamientos integrales con la tecnología más avanzada y un equipo humano comprometido con tu bienestar.</p>
+  </div>
+  <div class="grid">
+    <div class="card"><div class="card-icon">🦷</div><h3>Limpieza Dental</h3><p>Profilaxis profesional con ultrasonido para mantener dientes y encías saludables.</p><div class="card-price">Desde 40€</div></div>
+    <div class="card"><div class="card-icon">✨</div><h3>Blanqueamiento</h3><p>Técnicas LED seguras que devuelven el blanco natural a tu sonrisa en una sola sesión.</p><div class="card-price">Desde 180€</div></div>
+    <div class="card"><div class="card-icon">🔧</div><h3>Ortodoncia</h3><p>Brackets tradicionales, estéticos y alineadores invisibles. Primera visita sin coste.</p><div class="card-price">Primera visita gratis</div></div>
+    <div class="card"><div class="card-icon">🏥</div><h3>Implantes</h3><p>Soluciones definitivas con titanio de grado médico y corona personalizada.</p><div class="card-price">Desde 800€ c/u</div></div>
+    <div class="card"><div class="card-icon">👶</div><h3>Odontopediatría</h3><p>Atención especializada, lúdica y sin miedo para los más pequeños de la casa.</p><div class="card-price">Ambiente amigable</div></div>
+    <div class="card"><div class="card-icon">🚨</div><h3>Urgencias 24/7</h3><p>Atención inmediata para dolores agudos, traumatismos y urgencias dentales.</p><div class="card-price">Línea directa activa</div></div>
+  </div>
+</section>
+
+<section id="doctores" class="block">
+  <div class="section-head">
+    <span class="section-tag">Equipo médico</span>
+    <h2>Profesionales que inspiran confianza</h2>
+    <p>Especialistas certificados con formación internacional y vocación de servicio.</p>
+  </div>
+  <div class="grid">
+    <div class="doctor"><div class="doctor-img">👩‍⚕️</div><div class="doctor-info"><h4>Dra. María González</h4><span>Ortodoncista · 12 años</span><div class="doctor-tags"><span class="doctor-tag">Invisalign</span><span class="doctor-tag">Brackets</span></div></div></div>
+    <div class="doctor"><div class="doctor-img">‍⚕️</div><div class="doctor-info"><h4>Dr. Carlos Ramírez</h4><span>Implantólogo · 15 años</span><div class="doctor-tags"><span class="doctor-tag">Cirugía</span><span class="doctor-tag">Rehabilitación</span></div></div></div>
+    <div class="doctor"><div class="doctor-img">👩‍⚕️</div><div class="doctor-info"><h4>Dra. Laura Méndez</h4><span>Odontopediatra · 8 años</span><div class="doctor-tags"><span class="doctor-tag">Niños</span><span class="doctor-tag">Sedación</span></div></div></div>
+  </div>
+</section>
+
+<div class="cta">
+  <div class="cta-box">
+    <h3>¿Listo para transformar tu sonrisa?</h3>
+    <p>Pide tu evaluación gratuita hoy mismo. Nuestro asistente virtual te ayuda en segundos.</p>
+    <button class="btn btn-primary" onclick="toggleChat()">💬 Pedir cita con SonriBot</button>
+  </div>
+</div>
+
+<footer id="contacto">
+  <div class="footer-grid">
+    <div class="footer-col">
+      <div class="logo" style="margin-bottom:1rem;">
+        <div class="logo-icon"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C9 2 7 4 7 7c0 2 1 3 1 5s-1 3-1 5c0 3 2 5 5 5s5-2 5-5c0-2-1-3-1-5s1-3 1-5c0-3-2-5-5-5z"/></svg></div>
+        <span class="logo-text">Sonrisa Plena</span>
+      </div>
+      <p>Tu clínica dental de confianza. Tecnología, experiencia y calidez humana.</p>
+    </div>
+    <div class="footer-col">
+      <h5>Contacto</h5>
+      <p>📍 Calle Gran Vía 123, Madrid</p>
+      <p>📞 +34 900 123 456</p>
+      <p>✉️ info@sonrisaplena.es</p>
+    </div>
+    <div class="footer-col">
+      <h5>Horario</h5>
+      <p>Lun - Vie: 9:00 - 14:00 / 16:00 - 20:00</p>
+      <p>Sábados: 10:00 - 14:00</p>
+      <p>🚨 Urgencias: 24/7</p>
+    </div>
+    <div class="footer-col">
+      <h5>Síguenos</h5>
+      <a href="#">Instagram</a>
+      <a href="#">Facebook</a>
+      <a href="#">WhatsApp</a>
+    </div>
+  </div>
+  <div class="footer-bottom">© 2026 Clínica Dental Sonrisa Plena · Todos los derechos reservados</div>
+</footer>
+
+<button class="chat-toggle" id="chatToggle" onclick="toggleChat()"
+        aria-label="Abrir asistente virtual SonriBot"
+        aria-expanded="false" aria-controls="chatWindow">
+  <svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+    <path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/>
+  </svg>
+  <span class="chat-badge" id="chatBadge" aria-live="polite">0</span>
+</button>
+
+<div class="chat-window" id="chatWindow" role="dialog" aria-modal="true"
+     aria-label="Chat con SonriBot, asistente virtual">
+  <div class="chat-header">
+    <div class="chat-avatar" aria-hidden="true">🦷</div>
+    <div class="chat-header-info">
+      <h4>SonriBot</h4>
+      <span>En línea · Responde al instante</span>
+    </div>
+    <div class="chat-header-actions">
+      <button class="icon-btn" id="muteBtn" onclick="toggleMute()"
+              aria-label="Silenciar sonidos" title="Silenciar sonidos">
+        <svg id="soundIcon" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3A4.5 4.5 0 0014 7.97v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
+        </svg>
+      </button>
+      <button class="icon-btn" onclick="clearHistory()"
+              aria-label="Borrar historial del chat" title="Borrar historial">
+        <svg viewBox="0 0 24 24" fill="currentColor">
+          <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/>
+        </svg>
+      </button>
+      <button class="icon-btn" onclick="toggleChat()" aria-label="Cerrar chat">
+        <svg viewBox="0 0 24 24" fill="currentColor">
+          <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+  <div class="chat-body" id="chatBody" role="log" aria-live="polite" aria-relevant="additions"></div>
+  <div class="chat-input">
+    <label for="userInput" class="sr-only">Escribe tu mensaje</label>
+    <input type="text" id="userInput" placeholder="Escribe tu mensaje..."
+           autocomplete="off" aria-label="Mensaje para SonriBot"
+           maxlength="500"/>
+    <button onclick="sendMessage()" aria-label="Enviar mensaje">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+        <path d="M2 21l21-9L2 3v7l15 2-15 2z"/>
+      </svg>
+    </button>
+  </div>
+</div>
+
+<script>
+let state = { step: null, data: {}, originalQuery: '' };
+let unreadCount = 0;
+let isMuted = localStorage.getItem('chatMuted') === 'true';
+let chatInitialized = false;
+const chatBody = document.getElementById('chatBody');
+const chatWindow = document.getElementById('chatWindow');
+const chatToggle = document.getElementById('chatToggle');
+const chatBadge = document.getElementById('chatBadge');
+const userInput = document.getElementById('userInput');
+const muteBtn = document.getElementById('muteBtn');
+const MAX_MESSAGES = 50;
+const ESCAPE_WORDS = ['cancelar','salir','volver','menu','menú','atrás','inicio','basta','parar'];
+const CLINIC_WHATSAPP = '+212690157092';
+
+const SERVICES = [
+  { id:'limpieza', icon:'🦷', name:'Limpieza', price:'40€' },
+  { id:'blanqueamiento', icon:'✨', name:'Blanqueamiento', price:'180€' },
+  { id:'ortodoncia', icon:'🔧', name:'Ortodoncia', price:'Desde 1.500€' },
+  { id:'implantes', icon:'🏥', name:'Implantes', price:'Desde 800€' },
+  { id:'pediatria', icon:'👶', name:'Niños', price:'Especializado' },
+  { id:'consulta', icon:'🩺', name:'Primera visita', price:'Gratis' },
+];
+
+let audioCtx = null;
+function getAudioCtx() {
+  if (!audioCtx) {
+    try { audioCtx = new (window.AudioContext || window.webkitAudioContext)(); }
+    catch(e) { return null; }
+  }
+  return audioCtx;
+}
+function playNotificationSound() {
+  if (isMuted) return;
+  const ctx = getAudioCtx(); if (!ctx) return;
+  const now = ctx.currentTime;
+  [880, 1320].forEach((freq, i) => {
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+    osc.type = 'sine';
+    osc.frequency.setValueAtTime(freq, now);
+    gain.gain.setValueAtTime(0, now + i*0.08);
+    gain.gain.linearRampToValueAtTime(0.08, now + i*0.08 + 0.02);
+    gain.gain.exponentialRampToValueAtTime(0.001, now + i*0.08 + 0.25);
+    osc.connect(gain).connect(ctx.destination);
+    osc.start(now + i*0.08);
+    osc.stop(now + i*0.08 + 0.3);
+  });
+}
+function playSendSound() {
+  if (isMuted) return;
+  const ctx = getAudioCtx(); if (!ctx) return;
+  const now = ctx.currentTime;
+  const osc = ctx.createOscillator();
+  const gain = ctx.createGain();
+  osc.type = 'sine';
+  osc.frequency.setValueAtTime(600, now);
+  osc.frequency.exponentialRampToValueAtTime(900, now + 0.08);
+  gain.gain.setValueAtTime(0.05, now);
+  gain.gain.exponentialRampToValueAtTime(0.001, now + 0.12);
+  osc.connect(gain).connect(ctx.destination);
+  osc.start(now); osc.stop(now + 0.15);
+}
+function playClickSound() {
+  if (isMuted) return;
+  const ctx = getAudioCtx(); if (!ctx) return;
+  const now = ctx.currentTime;
+  const osc = ctx.createOscillator();
+  const gain = ctx.createGain();
+  osc.type = 'sine';
+  osc.frequency.setValueAtTime(1200, now);
+  gain.gain.setValueAtTime(0.03, now);
+  gain.gain.exponentialRampToValueAtTime(0.001, now + 0.05);
+  osc.connect(gain).connect(ctx.destination);
+  osc.start(now); osc.stop(now + 0.06);
+}
+
+function vibrate(pattern) {
+  if ('vibrate' in navigator && !isMuted) {
+    try { navigator.vibrate(pattern); } catch(e) {}
+  }
+}
+
+function toggleMute() {
+  isMuted = !isMuted;
+  localStorage.setItem('chatMuted', isMuted);
+  updateMuteUI();
+  if (!isMuted) getAudioCtx();
+}
+function updateMuteUI() {
+  muteBtn.classList.toggle('muted', isMuted);
+  muteBtn.setAttribute('aria-label', isMuted ? 'Activar sonidos' : 'Silenciar sonidos');
+  muteBtn.setAttribute('title', isMuted ? 'Activar sonidos' : 'Silenciar sonidos');
+  const icon = document.getElementById('soundIcon');
+  icon.innerHTML = isMuted
+    ? '<path d="M16.5 12A4.5 4.5 0 0014 7.97v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51A8.796 8.796 0 0021 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06a8.99 8.99 0 003.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z"/>'
+    : '<path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3A4.5 4.5 0 0014 7.97v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>';
+}
+updateMuteUI();
+
+function updateBadge() {
+  if (unreadCount > 0 && !chatWindow.classList.contains('active')) {
+    chatBadge.textContent = unreadCount > 9 ? '9+' : unreadCount;
+    chatBadge.classList.add('visible');
+  } else {
+    chatBadge.classList.remove('visible');
+  }
+}
+function incrementUnread() {
+  if (!chatWindow.classList.contains('active')) {
+    unreadCount++;
+    updateBadge();
+  }
+}
+function resetUnread() {
+  unreadCount = 0;
+  updateBadge();
+}
+
+const knowledge = {
+  servicios: {
+    keywords: ['servicio','tratamiento','hacéis','ofrecéis','qué hacéis','procedimiento'],
+    reply: "Ofrecemos estos servicios 👇 Elige el que te interese:",
+    buttons: 'services'
+  },
+  precios: {
+    keywords: ['precio','precios','coste','cuesta','cuánto','cuanto','valor','tarifa','cobráis','caro','barato'],
+    reply: "💰 Tarifas orientativas:\n• Limpieza: 40€\n• Blanqueamiento: 180€\n• Ortodoncia: desde 1.500€\n• Implantes: desde 800€ c/u\n• Primera visita: GRATIS\n\n¿Te pido una evaluación gratuita?",
+    buttons: [
+      { text:'📅 Pedir evaluación', action:'send', value:'Pedir cita', style:'primary' },
+      { text:'Ver todos los servicios', action:'send', value:'servicios' }
+    ]
+  },
+  horarios: {
+    keywords: ['horario','horarios','hora','abierto','abrís','cerráis','cuando abrís','cuando abren'],
+    reply: "🕐 Horario:\n• Lun-Vie: 9:00 - 14:00 / 16:00 - 20:00\n• Sáb: 10:00 - 14:00\n• Dom: Cerrado\n• 🚨 Urgencias: 24/7",
+    buttons: [
+      { text:'📅 Pedir cita', action:'send', value:'Pedir cita', style:'primary' },
+      { text:' Ubicación', action:'send', value:'ubicación' }
+    ]
+  },
+  ubicacion: {
+    keywords: ['donde','dónde','dirección','ubicacion','ubicación','llegar','direcciones','queda','address','calle'],
+    reply: "📍 Calle Gran Vía 123, Madrid.\n\nAparcamiento gratuito y acceso para movilidad reducida.",
+    buttons: [
+      { text:'🗺️ Ver en mapa', action:'url', value:'https://maps.google.com' },
+      { text:'📅 Pedir cita', action:'send', value:'Pedir cita', style:'primary' }
+    ]
+  },
+  doctores: {
+    keywords: ['doctor','doctora','dentista','equipo','profesional','especialista','odontólogo','odontologo','médico','medico'],
+    reply: "👨‍⚕️ Equipo:\n• Dra. María González · Ortodoncista\n• Dr. Carlos Ramírez · Implantólogo\n• Dra. Laura Méndez · Odontopediatra",
+    buttons: [
+      { text:'📅 Pedir cita', action:'send', value:'Pedir cita', style:'primary' },
+      { text:'Ver servicios', action:'send', value:'servicios' }
+    ]
+  },
+  urgencia: {
+    keywords: ['urgencia','urgencias','dolor','duele','trauma','golpe','roto','sangra','hinchazon','hinchazón','fiebre','me duele','urgente','emergencia'],
+    reply: " Si es una urgencia:\n1. Llama YA al +34 900 123 456\n2. Si hay sangrado, aplica presión con gasa\n3. Si se te ha caído un diente, guárdalo en leche",
+    buttons: [
+      { text:' Llamar ahora', action:'call', value:'+34900123456', style:'primary' },
+      { text:'💬 WhatsApp', action:'whatsapp', value:'+34900123456' },
+      { text:'📅 Cita urgente', action:'send', value:'Cita urgente' }
+    ]
+  },
+  seguros: {
+    keywords: ['seguro','convenio','aseguradora','cobertura','medicina prepagada','mutua','sanitas','mapfre','axa','metlife'],
+    reply: "🏥 Trabajamos con las principales mutuas: Sanitas, Mapfre, Axa, MetLife y más.",
+    buttons: [
+      { text:'📞 Consultar cobertura', action:'call', value:'+34900123456', style:'primary' }
+    ]
+  },
+  saludo: {
+    keywords: ['hola','buenas','buenos','hey','saludos','hi','buenos dias','buenas tardes','buenas noches','buen día','buen dia','qué tal','que tal'],
+    reply: "¡Hola!  Soy SonriBot. ¿En qué puedo ayudarte hoy?",
+    buttons: 'main_menu'
+  },
+  gracias: {
+    keywords: ['gracias','thank','agradezco','te lo agradezco','mil gracias','grax','muchas gracias'],
+    reply: "¡De nada! 😊 ¿Algo más en lo que pueda ayudarte?",
+    buttons: 'main_menu'
+  },
+  despedida: {
+    keywords: ['adios','adiós','chao','bye','hasta luego','nos vemos','hasta pronto','chao bye','me voy'],
+    reply: "¡Hasta pronto! 👋 Recuerda sonreír mucho. 🦷✨"
+  }
+};
+
+function saveMessage(role, content, buttons = null) {
+  try {
+    const history = JSON.parse(localStorage.getItem('chatHistory') || '[]');
+    history.push({ role, content, time: Date.now(), buttons });
+    if (history.length > MAX_MESSAGES) history.splice(0, history.length - MAX_MESSAGES);
+    localStorage.setItem('chatHistory', JSON.stringify(history));
+  } catch(e) { console.warn('No se pudo guardar historial:', e); }
+}
+
+function loadHistory() {
+  try {
+    const history = JSON.parse(localStorage.getItem('chatHistory') || '[]');
+    if (history.length === 0) return false;
+    chatBody.innerHTML = '';
+    
+    history.forEach((m, index) => {
+      renderMessage(m.role, m.content, m.time, false);
+      if (m.role === 'bot' && m.buttons) {
+        setTimeout(() => {
+          const botMsgs = chatBody.querySelectorAll('.msg.bot');
+          if (botMsgs.length > 0) {
+            const targetMsg = botMsgs[botMsgs.length - 1];
+            if (targetMsg && !targetMsg.querySelector('.inline-buttons, .service-cards')) {
+              if (m.buttons === 'services') {
+                renderServiceCards(targetMsg);
+              } else if (typeof m.buttons === 'string' && BUTTON_PRESETS[m.buttons]) {
+                renderInlineButtons(BUTTON_PRESETS[m.buttons], targetMsg);
+              } else if (Array.isArray(m.buttons)) {
+                renderInlineButtons(m.buttons, targetMsg);
+              }
+            }
+          }
+        }, 100 * index);
+      }
+    });
+    return true;
+  } catch(e) {
+    console.warn('Error cargando historial:', e);
+    return false;
+  }
+}
+
+function clearHistory() {
+  if (!confirm('¿Borrar todo el historial del chat?')) return;
+  localStorage.removeItem('chatHistory');
+  localStorage.removeItem('citas');
+  chatBody.innerHTML = '';
+  state = { step: null, data: {}, originalQuery: '' };
+  chatInitialized = false;
+  setTimeout(() => {
+    addBotMessage("¡Hola! 👋 Soy <b>SonriBot</b>. ¿En qué puedo ayudarte hoy?", { buttons: 'main_menu' });
+  }, 100);
+}
+
+function formatTime(ts) {
+  const d = new Date(ts);
+  return d.toLocaleTimeString('es-ES', { hour:'2-digit', minute:'2-digit' });
+}
+
+function renderMessage(role, content, time, animate = true) {
+  const msg = document.createElement('div');
+  msg.className = 'msg ' + role;
+  if (role === 'bot') {
+    msg.innerHTML = content.replace(/\n/g, '<br>');
+  } else {
+    msg.textContent = content;
+  }
+  if (time) {
+    const t = document.createElement('span');
+    t.className = 'msg-time';
+    t.textContent = formatTime(time);
+    msg.appendChild(t);
+  }
+  if (!animate) msg.style.animation = 'none';
+  chatBody.appendChild(msg);
+}
+
+function renderInlineButtons(buttons, parentMsg) {
+  if (!parentMsg || parentMsg.querySelector('.inline-buttons, .service-cards')) return;
+  const wrap = document.createElement('div');
+  wrap.className = 'inline-buttons';
+  wrap.setAttribute('role', 'group');
+  wrap.setAttribute('aria-label', 'Opciones disponibles');
+
+  buttons.forEach(b => {
+    const btn = document.createElement('button');
+    btn.className = 'inline-btn' + (b.style ? ' ' + b.style : '');
+    btn.innerHTML = b.text;
+    btn.onclick = () => handleButtonAction(b, wrap);
+    wrap.appendChild(btn);
+  });
+
+  parentMsg.appendChild(wrap);
+}
+
+function renderServiceCards(parentMsg) {
+  if (!parentMsg || parentMsg.querySelector('.inline-buttons, .service-cards')) return;
+  const wrap = document.createElement('div');
+  wrap.className = 'service-cards';
+  wrap.setAttribute('role', 'listbox');
+  wrap.setAttribute('aria-label', 'Selecciona un servicio');
+
+  SERVICES.forEach(s => {
+    const card = document.createElement('div');
+    card.className = 'service-card';
+    card.setAttribute('role', 'option');
+    card.setAttribute('tabindex', '0');
+    card.innerHTML = `
+      <div class="sc-icon">${s.icon}</div>
+      <div class="sc-name">${s.name}</div>
+      <div class="sc-price">${s.price}</div>
+    `;
+    card.onclick = () => handleServiceSelect(s, wrap);
+    card.onkeypress = (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); handleServiceSelect(s, wrap); } };
+    wrap.appendChild(card);
+  });
+
+  parentMsg.appendChild(wrap);
+}
+
+function handleButtonAction(btn, wrap) {
+  if (!wrap) return;
+  playClickSound();
+  vibrate(20);
+  wrap.querySelectorAll('.inline-btn').forEach(b => b.disabled = true);
+
+  switch(btn.action) {
+    case 'send':
+      handleUserInput(btn.value);
+      break;
+    case 'call':
+      window.location.href = 'tel:' + btn.value;
+      addBotMessage("📞 Iniciando llamada al " + btn.value + "...");
+      break;
+    case 'whatsapp':
+      const phone = btn.value.replace(/[^0-9]/g, '');
+      window.open('https://wa.me/' + phone, '_blank');
+      break;
+    case 'url':
+      window.open(btn.value, '_blank');
+      break;
+    case 'reset':
+      state = { step: null, data: {}, originalQuery: '' };
+      addBotMessage("Proceso reiniciado. ¿En qué más puedo ayudarte?", { buttons: 'main_menu' });
+      break;
+  }
+}
+
+function handleServiceSelect(service, wrap) {
+  playClickSound();
+  vibrate(20);
+
+  if (wrap) {
+    wrap.querySelectorAll('.service-card').forEach(c => {
+      c.classList.add('disabled');
+      c.onclick = null;
+      c.removeAttribute('tabindex');
+    });
+    const cards = wrap.querySelectorAll('.service-card');
+    const idx = SERVICES.findIndex(s => s.id === service.id);
+    if (cards[idx]) {
+      cards[idx].style.borderColor = 'var(--cyan)';
+      cards[idx].style.background = 'var(--grad-soft)';
+    }
+  } else {
+    document.querySelectorAll('.service-card:not(.disabled)').forEach(c => {
+      c.classList.add('disabled');
+      c.onclick = null;
+      c.removeAttribute('tabindex');
+    });
+  }
+
+  if (state.step === 'servicio') {
+    state.data.servicio = service.name;
+    state.step = 'telefono';
+    addBotMessage("Perfecto. <b>¿Cuál es tu número de teléfono?</b>");
+    return;
+  } else {
+    state.data.servicioSeleccionado = service.name;
+    const info = getServiceInfo(service.id);
+    addBotMessage(info, {
+      buttons: [
+        { text:'📅 Pedir cita para este servicio', action:'send', value:'Pedir cita para ' + service.name, style:'primary' },
+        { text:'Ver otros servicios', action:'send', value:'servicios' },
+        { text:' Hablar con asesor', action:'whatsapp', value:'+34900123456' }
+      ]
+    });
+  }
+}
+
+function getServiceInfo(id) {
+  const info = {
+    limpieza: "🦷 <b>Limpieza Dental</b>\nProfilaxis profesional con ultrasonido. Elimina placa y sarro. Duración: 30-45 min.",
+    blanqueamiento: "✨ <b>Blanqueamiento LED</b>\nHasta 8 tonos más blanco en 1 sesión. Seguro y sin sensibilidad.",
+    ortodoncia: "🔧 <b>Ortodoncia</b>\nBrackets metálicos, estéticos o alineadores invisibles. Primera visita gratuita.",
+    implantes: " <b>Implantes dentales</b>\nTitanio de grado médico. Solución definitiva para dientes perdidos.",
+    pediatria: "👶 <b>Odontopediatría</b>\nAtención especializada para niños en un ambiente lúdico y sin miedo.",
+    consulta: "🩺 <b>Primera visita</b>\nEvaluación completa + plan de tratamiento personalizado. GRATIS."
+  };
+  return info[id] || "Información del servicio.";
+}
+
+const BUTTON_PRESETS = {
+  main_menu: [
+    { text:'📅 Pedir cita', action:'send', value:'Pedir cita', style:'primary' },
+    { text:'🦷 Servicios', action:'send', value:'servicios' },
+    { text:'💰 Precios', action:'send', value:'precios' },
+    { text:'🕐 Horario', action:'send', value:'horarios' },
+    { text:'🚨 Urgencia', action:'send', value:'urgencia', style:'danger' }
+  ],
+  post_booking: [
+    { text:'🦷 Ver servicios', action:'send', value:'servicios' },
+    { text:'💬 WhatsApp', action:'whatsapp', value:'+34900123456' },
+    { text:'🔄 Nueva consulta', action:'reset' }
+  ],
+  date_quick: [
+    { text:'Hoy', action:'send', value:'hoy', style:'primary' },
+    { text:'Mañana', action:'send', value:'mañana' },
+    { text:'Esta semana', action:'send', value:'lunes' },
+    { text:'📅 Elegir otra', action:'send', value:'otra fecha' }
+  ]
+};
+
+function toggleChat() {
+  const willOpen = !chatWindow.classList.contains('active');
+  chatWindow.classList.toggle('active');
+  chatToggle.setAttribute('aria-expanded', willOpen);
+
+  if (willOpen) {
+    resetUnread();
+    getAudioCtx();
+    if (chatBody.children.length === 0 && !chatInitialized) {
+      const loaded = loadHistory();
+      if (!loaded) {
+        setTimeout(() => {
+          addBotMessage("¡Hola!  Soy <b>SonriBot</b>. ¿En qué puedo ayudarte hoy?", { buttons: 'main_menu' });
+          chatInitialized = true;
+        }, 300);
+      } else {
+        chatInitialized = true;
+      }
+    }
+    setTimeout(() => userInput.focus(), 350);
+  } else {
+    userInput.blur();
+  }
+}
+
+function addBotMessage(text, options = {}, save = true) {
+  const typing = document.createElement('div');
+  typing.className = 'typing';
+  typing.setAttribute('aria-label', 'SonriBot está escribiendo');
+  typing.innerHTML = '<span></span><span></span><span></span>';
+  chatBody.appendChild(typing);
+  chatBody.scrollTop = chatBody.scrollHeight;
+
+  setTimeout(() => {
+    typing.remove();
+    const time = Date.now();
+    renderMessage('bot', text, time);
+
+    if (save && options.buttons) {
+      saveMessage('bot', text, options.buttons);
+    } else if (save) {
+      saveMessage('bot', text);
+    }
+
+    setTimeout(() => {
+      const msgs = chatBody.querySelectorAll('.msg.bot');
+      const lastMsg = msgs[msgs.length - 1];
+      if (lastMsg && options.buttons) {
+        if (options.buttons === 'services') {
+          renderServiceCards(lastMsg);
+        } else if (typeof options.buttons === 'string' && BUTTON_PRESETS[options.buttons]) {
+          renderInlineButtons(BUTTON_PRESETS[options.buttons], lastMsg);
+        } else if (Array.isArray(options.buttons)) {
+          renderInlineButtons(options.buttons, lastMsg);
+        }
+      }
+    }, 50);
+
+    trimMessages();
+    chatBody.scrollTop = chatBody.scrollHeight;
+    playNotificationSound();
+    incrementUnread();
+  }, 600 + Math.random()*400);
+}
+
+function addUserMessage(text) {
+  const time = Date.now();
+  renderMessage('user', text, time);
+  saveMessage('user', text);
+  trimMessages();
+  chatBody.scrollTop = chatBody.scrollHeight;
+  playSendSound();
+  vibrate(30);
+}
+
+function trimMessages() {
+  while (chatBody.children.length > MAX_MESSAGES) {
+    chatBody.removeChild(chatBody.firstChild);
+  }
+  
+  try {
+    const history = JSON.parse(localStorage.getItem('chatHistory') || '[]');
+    if (history.length > MAX_MESSAGES) {
+      history.splice(0, history.length - MAX_MESSAGES);
+      localStorage.setItem('chatHistory', JSON.stringify(history));
+    }
+  } catch(e) { console.warn('No se pudo sincronizar historial:', e); }
+}
+
+function clearSuggestions() {
+  chatBody.querySelectorAll('.suggestions').forEach(s => s.remove());
+}
+
+function showSuggestions(options) {
+  clearSuggestions();
+  const wrap = document.createElement('div');
+  wrap.className = 'suggestions';
+  wrap.setAttribute('role', 'group');
+  wrap.setAttribute('aria-label', 'Sugerencias rápidas');
+  options.forEach(opt => {
+    const btn = document.createElement('button');
+    btn.className = 'suggestion-btn';
+    btn.textContent = opt;
+    btn.onclick = () => { clearSuggestions(); handleUserInput(opt); };
+    wrap.appendChild(btn);
+  });
+  chatBody.appendChild(wrap);
+  chatBody.scrollTop = chatBody.scrollHeight;
+}
+
+function resetFlow(reason) {
+  state = { step: null, data: {}, originalQuery: '' };
+  if (reason) addBotMessage(reason, { buttons: 'main_menu' });
+  else addBotMessage("¿En qué más puedo ayudarte?", { buttons: 'main_menu' });
+}
+
+function isValidName(text) {
+  const clean = text.trim();
+  if (clean.length < 2 || clean.length > 60) return false;
+  return /^[a-záéíóúñü\s'\-]+$/i.test(clean);
+}
+
+function isValidPhone(text) {
+  const clean = text.replace(/[\s\-\(\)]/g, '');
+  return /^\+?\d{9,15}$/.test(clean);
+}
+
+function normalizeDate(text) {
+  const lower = text.toLowerCase().trim();
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  
+  if (/mañana|pasado ma/.test(lower)) return 'Mañana';
+  if (/hoy/.test(lower)) return 'Hoy';
+  if (/esta semana|próximos días|proximos dias/.test(lower)) return 'Esta semana';
+  if (/^\d{1,2}[\/\-]\d{1,2}([\/\-]\d{2,4})?$/.test(lower)) {
+    const parts = lower.split(/[\/\-]/);
+    const day = parseInt(parts[0]);
+    const month = parseInt(parts[1]) - 1;
+    const year = parts[2] ? (parseInt(parts[2]) < 100 ? 2000 + parseInt(parts[2]) : parseInt(parts[2])) : today.getFullYear();
+    const date = new Date(year, month, day);
+    if (date < today) return null;
+    return lower;
+  }
+  if (/\d{1,2}\s+de\s+[a-záéíóúñ]+/.test(lower)) return lower;
+  if (/lunes|martes|mi[eé]rcoles|jueves|viernes|s[aá]bado|domingo/.test(lower)) return lower;
+  if (/otra|elegir|escoger|después|mas adelante|más adelante/.test(lower)) return 'A definir';
+  return null;
+}
+
+function isValidService(text) {
+  const lower = text.toLowerCase();
+  return SERVICES.some(s => lower.includes(s.name.toLowerCase()) || lower.includes(s.id));
+}
+
+function sendWhatsAppNotification() {
+  const message = `Nueva cita agendada:\nNombre: ${state.data.nombre}\nFecha: ${state.data.fecha}\nServicio: ${state.data.servicio}\nTeléfono: ${state.data.telefono}`;
+  const encodedMessage = encodeURIComponent(message);
+  const whatsappUrl = `https://wa.me/${CLINIC_WHATSAPP.replace(/\+/g, '')}?text=${encodedMessage}`;
+  window.open(whatsappUrl, '_blank');
+}
+
+function sendMessage() {
+  const text = userInput.value;
+  const trimmed = text.trim();
+  if (!trimmed) return;
+  userInput.value = '';
+  handleUserInput(trimmed);
+}
+
+function handleUserInput(text) {
+  addUserMessage(text);
+  clearSuggestions();
+  const lower = text.toLowerCase();
+
+  if (ESCAPE_WORDS.some(w => lower.includes(w))) {
+    resetFlow("He cancelado el proceso anterior. ¿En qué más puedo ayudarte?");
+    return;
+  }
+
+  if (state.step === 'nombre') {
+    if (!isValidName(text)) {
+      addBotMessage("Disculpa, no parece un nombre válido 😅. ¿Podrías escribir tu nombre completo?");
+      return;
+    }
+    if (/\?|cuanto|cuánto|precio|coste|donde|horario/.test(lower)) {
+      addBotMessage("Parece que tienes otra duda. ¿Prefieres que cancele la petición de cita y responda tu pregunta?", {
+        buttons: [
+          { text:'Sí, cancelar', action:'send', value:'sí', style:'primary' },
+          { text:'No, continuar', action:'send', value:'no' }
+        ]
+      });
+      state.step = 'confirmar_cancelar';
+      state.originalQuery = text;
+      return;
+    }
+    state.data.nombre = text;
+    state.step = 'fecha';
+    addBotMessage("¡Encantado de conocerte, <b>" + text + "</b>! <b>¿Para cuándo te gustaría la cita?</b>", {
+      buttons: 'date_quick'
+    });
+    return;
+  }
+
+  if (state.step === 'confirmar_cancelar') {
+    if (/^s[ií]$|^si$|^sí$|ok|dale/.test(lower)) {
+      const q = state.originalQuery;
+      state = { step: null, data: {}, originalQuery: '' };
+      addBotMessage("Proceso cancelado. Respondiendo a tu consulta...");
+      setTimeout(() => handleUserInput(q), 900);
+      return;
+    }
+    state.step = 'nombre';
+    addBotMessage("Vale, continuemos. <b>¿Cuál es tu nombre completo?</b>");
+    return;
+  }
+
+  if (state.step === 'fecha') {
+    const fecha = normalizeDate(text);
+    if (!fecha) {
+      addBotMessage("No he reconocido esa fecha 😕. Elige una opción rápida:", {
+        buttons: 'date_quick'
+      });
+      return;
+    }
+    state.data.fecha = fecha;
+    state.step = 'servicio';
+    addBotMessage("Perfecto. <b>Ahora elige el servicio que necesitas</b> 👇", {
+      buttons: 'services'
+    });
+    return;
+  }
+
+  if (state.step === 'servicio') {
+    if (!isValidService(text)) {
+      addBotMessage("Por favor, selecciona un servicio de la lista 👇", {
+        buttons: 'services'
+      });
+      return;
+    }
+    const service = SERVICES.find(s => text.toLowerCase().includes(s.name.toLowerCase()));
+    if (service) {
+      handleServiceSelect(service, null);
+      return;
+    }
+  }
+
+  if (state.step === 'telefono') {
+    if (!isValidPhone(text)) {
+      addBotMessage("Disculpa, no parece un número de teléfono válido 😅. <b>¿Cuál es tu número de teléfono?</b>");
+      return;
+    }
+    state.data.telefono = text.replace(/[\s\-\(\)]/g, '');
+    state.step = null;
+    try {
+      const citas = JSON.parse(localStorage.getItem('citas') || '[]');
+      state.data.id = Date.now();
+      state.data.creada = new Date().toISOString();
+      citas.push({...state.data});
+      localStorage.setItem('citas', JSON.stringify(citas));
+    } catch(e) { console.warn('No se pudo guardar cita:', e); }
+
+    addBotMessage("✅ ¡Cita pedida!\n\n👤 " + state.data.nombre +
+      "\n📅 " + state.data.fecha +
+      "\n🦷 " + state.data.servicio +
+      "\n📞 " + state.data.telefono +
+      "\n\nTe enviaremos un recordatorio. ¿Algo más?",
+      { buttons: 'post_booking' });
+    
+    sendWhatsAppNotification();
+    state.data = {};
+    return;
+  }
+
+  if (/pedir cita|reservar|cita|turno|atender/.test(lower)) {
+    state.step = 'nombre';
+    const esUrgente = /urgente|urgencia|ya|ahora|rápido|rapido/.test(lower);
+    if (state.data.servicioSeleccionado) {
+      state.data.servicio = state.data.servicioSeleccionado;
+    }
+    addBotMessage(esUrgente
+      ? "🚨 Entiendo que es urgente. Vamos rápido 😊 <b>¿Cuál es tu nombre?</b>"
+      : "¡Con gusto! 😊 <b>¿Cuál es tu nombre completo?</b>");
+    return;
+  }
+
+  for (const key in knowledge) {
+    if (knowledge[key].keywords.some(k => lower.includes(k))) {
+      const entry = knowledge[key];
+      addBotMessage(entry.reply, entry.buttons ? { buttons: entry.buttons } : {});
+      return;
+    }
+  }
+
+  addBotMessage("Disculpa, no te he entendido del todo . Elige una opción:", {
+    buttons: 'main_menu'
+  });
+}
+
+userInput.addEventListener('keypress', (e) => {
+  if (e.key === 'Enter') { e.preventDefault(); sendMessage(); }
+});
+
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape' && chatWindow.classList.contains('active')) {
+    toggleChat();
+    chatToggle.focus();
+  }
+  if (e.key === '/' && (e.ctrlKey || e.metaKey)) {
+    e.preventDefault();
+    if (!chatWindow.classList.contains('active')) toggleChat();
+    userInput.focus();
+  }
+});
+
+chatWindow.addEventListener('keydown', (e) => {
+  if (e.key !== 'Tab' || !chatWindow.classList.contains('active')) return;
+  const focusables = chatWindow.querySelectorAll('button, input, [tabindex]:not([tabindex="-1"])');
+  if (focusables.length === 0) return;
+  const first = focusables[0];
+  const last = focusables[focusables.length - 1];
+  if (e.shiftKey && document.activeElement === first) {
+    e.preventDefault(); last.focus();
+  } else if (!e.shiftKey && document.activeElement === last) {
+    e.preventDefault(); first.focus();
+  }
+});
+</script>
+</body>
+</html>
